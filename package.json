@@ -1,0 +1,34 @@
+{
+  "name": "stats-manager",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Client-Side Tag Management System (TMS)",
+  "main": "main.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "bundle": "browserify -s StatsManager -c 'coffee -scb' main.js -o ./dist/stats-manager.js",
+    "bundle-min": "browserify -s StatsManager -c 'coffee -scb' main.js | uglifyjs -o ./dist/stats-manager.min.js",
+    "bundle-require": "browserify -c 'coffee -scb' -r ./main.js:StatsManager -o ./dist/stats-manager.require.js",
+    "bundle-require-min": "browserify -c 'coffee -scb' -r ./main.js:StatsManager | uglifyjs -o ./dist/stats-manager.require.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rhumlover/stats-manager"
+  },
+  "keywords": [
+    "statistics"
+  ],
+  "author": "Thomas LE JEUNE",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rhumlover/stats-manager/issues"
+  },
+  "homepage": "https://github.com/rhumlover/stats-manager",
+  "dependencies": {
+    "browserify": "*",
+    "coffee-script": "~1.2.0",
+    "uglify-js": "^2.4.15"
+  }
+}
