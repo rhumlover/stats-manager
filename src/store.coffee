@@ -4,6 +4,7 @@ class Store extends Eventer
 
     constructor: (data) ->
         @data = data ? {}
+        super data
 
     set: (key, value, silent = false) ->
         oldValue = @data[key] ? null

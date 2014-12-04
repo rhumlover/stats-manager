@@ -481,13 +481,10 @@ Store = (function(_super) {
 
   __extends(Store, _super);
 
-  function Store() {
-    Store.__super__.constructor.apply(this, arguments);
+  function Store(data) {
+    this.data = data != null ? data : {};
+    Store.__super__.constructor.call(this, data);
   }
-
-  Store.prototype.contructor = function(data) {
-    return this.data = data != null ? data : {};
-  };
 
   Store.prototype.set = function(key, value, silent) {
     var oldValue, _ref;
