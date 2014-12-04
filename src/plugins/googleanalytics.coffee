@@ -30,7 +30,6 @@ class GoogleAnalyticsUniversalPlugin extends Plugin
         @set 'loaded', yes
 
         options ?= {}
-        if sampleRate? then options.sampleRate = parseFloat(sampleRate, 10)
 
         domain ?= 'auto'
         createParam = ['create', account, domain, options]
