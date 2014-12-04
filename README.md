@@ -28,10 +28,10 @@ stats-manager.min.js         stats-manager.require.min.js
 - `stats-manager.require.js` is the CommonJS compliant version. It does not expose a main StatsManager object to `window`, but defines a "require" function, or use the existing one you might have already installed. You can then access to the main object by writing `var StatsManager = require('StatsManager');`
 
 ### Web browser
-- [stats-manager.js](http://s2.dmcdn.net/IFADE.js)
-- [stats-manager.min.js](http://s2.dmcdn.net/IFAC0.js)
-- [stats-manager.require.js](http://s1.dmcdn.net/IE_3T.js)
-- [stats-manager.require.min.js](http://s1.dmcdn.net/IFACn.js)
+- [stats-manager.js](http://s1.dmcdn.net/IFCUD.js)
+- [stats-manager.min.js](http://s1.dmcdn.net/IFCUG.js)
+- [stats-manager.require.js](http://s1.dmcdn.net/IFCUS.js)
+- [stats-manager.require.min.js](http://s1.dmcdn.net/IFCUa.js)
 
 
 ## Main Objects

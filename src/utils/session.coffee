@@ -22,3 +22,6 @@ class Session
 
     has: (key) ->
         !!(key of @data)
+
+
+module.exports = Session
