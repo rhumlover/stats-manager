@@ -2,7 +2,7 @@ Eventer = require './utils/eventer.coffee'
 
 class Store extends Eventer
 
-    contructor: (data) ->
+    constructor: (data) ->
         @data = data ? {}
 
     set: (key, value, silent = false) ->
