@@ -397,6 +397,7 @@ StatsManager = (function() {
   StatsManager.prototype.setEvents = function(eventList) {
     var e, _i, _len;
     this.eventList = eventList;
+    if (eventList == null) return;
     for (_i = 0, _len = eventList.length; _i < _len; _i++) {
       e = eventList[_i];
       this[e] = e;

@@ -6,6 +6,8 @@ class StatsManager
         @enabled = yes
 
     setEvents: (@eventList) ->
+        return unless eventList?
+
         for e in eventList
             @[e] = e
             StatsManager[e] = e
