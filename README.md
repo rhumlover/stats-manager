@@ -191,7 +191,15 @@ plugin_GA.listen(@PAGE_CHANGE)
 ```
 (function() {
   var ComScorePlugin, StatsManager, plugin_cs, sm, _ref;
-  _ref = require('StatsManager'), StatsManager = _ref.StatsManager, ComScorePlugin = _ref.ComScorePlugin;
+  
+  // CommonJS
+  _ref = require('StatsManager');
+  
+  // Library
+  _ref = window.StatsManager
+  
+  StatsManager = _ref.StatsManager;
+  ComScorePlugin = _ref.ComScorePlugin;
 
   sm = new StatsManager(['ping']);
 
@@ -204,7 +212,7 @@ plugin_GA.listen(@PAGE_CHANGE)
   sm.register(plugin_cs);
   sm.start();
 
-  sm.trigger('lol', { 'success': 'yes!' });
+  sm.trigger('ping', { 'success': 'yes!' });
   
   >> Object {success: "yes!"}
 })();
