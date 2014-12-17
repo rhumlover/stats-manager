@@ -153,7 +153,7 @@ Several chained methods are available:
 
 ```
 plugin.listen(event)
-    .filter((data)-> true/false)
+    .filter((data) -> true/false)
     .async((data, done) -> done(data))
     .then((data) -> @track...)
 ```
@@ -196,7 +196,7 @@ plugin_GA.listen(@PAGE_CHANGE)
   _ref = require('StatsManager');
   
   // Library
-  _ref = window.StatsManager
+  _ref = window.StatsManager;
   
   StatsManager = _ref.StatsManager;
   ComScorePlugin = _ref.ComScorePlugin;
