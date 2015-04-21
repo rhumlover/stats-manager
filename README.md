@@ -45,6 +45,14 @@ $ npm run-script build:umd
 
 ## Main Objects
 
+```
+- StatsManager
+    .plugins
+        .ComScorePlugin
+        .GoogleAnalyticsPlugin
+        .SiteCatalystPlugin
+```
+
 ### StatsManager
 
 ```
@@ -208,30 +216,29 @@ plugin_GA.listen(@PAGE_CHANGE)
 ## Integration example
 ```
 (function() {
-  var ComScorePlugin, StatsManager, plugin_cs, sm, _ref;
-  
-  // CommonJS
-  _ref = require('StatsManager');
-  
-  // Library
-  _ref = window.StatsManager;
-  
-  StatsManager = _ref.StatsManager;
-  ComScorePlugin = _ref.ComScorePlugin;
+    var ComScorePlugin, StatsManager, plugin_cs, sm;
 
-  sm = new StatsManager(['ping']);
+    // CommonJS
+    StatsManager = require('StatsManager');
 
-  plugin_cs = new ComScorePlugin();
-  plugin_cs.listen('ping')
-    .then(function(data) {
-      console.log(data);
-    });
+    // Library
+    StatsManager = window.StatsManager;
 
-  sm.register(plugin_cs);
-  sm.start();
+    ComScorePlugin = StatsManager.plugins.ComScorePlugin;
 
-  sm.trigger('ping', { 'success': 'yes!' });
-  
-  >> Object {success: "yes!"}
+    sm = new StatsManager(['ping']);
+
+    plugin_cs = new ComScorePlugin();
+    plugin_cs.listen('ping')
+        .then(function(data) {
+          console.log(data);
+        });
+
+    sm.register(plugin_cs);
+    sm.start();
+
+    sm.trigger('ping', { 'success': 'yes!' });
+
+    >> Object {success: "yes!"}
 })();
 ```
