@@ -56,6 +56,10 @@ $ npm run-script build:umd
 ### StatsManager
 
 ```
+StatsManager = require 'StatsManager'
+SiteCatalystPlugin = StatsManager.plugins.SiteCatalystPlugin
+GoogleAnalyticsPlugin = StatsManager.plugins.GoogleAnalyticsPlugin
+
 // Define available events
 eventList = [
     "START"
