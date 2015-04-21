@@ -19,7 +19,7 @@ class Plugin
 
         onModelChange = (model, options) =>
             if @isReady()
-                # console.log '%c$ %s is ready !', 'font-weight:bold;', @
+                console.log '%c$ %s is ready !', 'font-weight:bold;', @
                 _unqueue.call @
                 @_data.off 'change', onModelChange
 
@@ -31,7 +31,7 @@ class Plugin
         @initialize?()
 
     start: ->
-        # console.log '$ Starting %s', @
+        console.log '$ Starting %s', @
         @set 'started', yes
         @
 
@@ -39,7 +39,7 @@ class Plugin
         if @_triggerQueue.length
             ((queue) =>
                 for queueItem in queue
-                    # console.log '$ Unqueuing %s on %s', queueItem[0], @
+                    console.log '$ Unqueuing %s on %s', queueItem[0], @
                     @trigger.apply @, queueItem
                 return
             )(@_triggerQueue)
@@ -50,7 +50,7 @@ class Plugin
 
     setSampling: (isInSample) ->
         if isInSample?() isnt true
-            # console.log '%c⚠ Plugin %s is not sampled and has been disabled', 'font-weight: bold', @
+            console.log '%c⚠ Plugin %s is not sampled and has been disabled', 'font-weight: bold', @
             @enabled = no
         @enabled
 
@@ -80,7 +80,7 @@ class Plugin
             @_triggerQueue.push arguments
             return @
 
-        # console.log '$ Trigerring %s on %s', e, @
+        console.log '$ Trigerring %s on %s', e, @
         @_eventBus.trigger.apply @_eventBus, arguments
         @
 
@@ -115,7 +115,7 @@ class Plugin
         cs.onload = cs.onreadystatechange = ->
             if not loaded and (not @readyState or @readyState is 'loaded' or @readyState is 'complete')
                 loaded = true
-                # console.log '> Plugin for %s loaded', self
+                console.log '> Plugin for %s loaded', self
 
                 self.onPluginLoaded?()
 
