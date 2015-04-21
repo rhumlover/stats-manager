@@ -18,31 +18,26 @@ class StatsManager
         @
 
     start: ->
-        @map (o) -> o.start()
+        @managers.forEach (m) -> m.start()
         @
 
     reset: ->
-        @map (o) -> o.reset()
-        @
-
-    set: (args...) ->
-        @map (o) -> o.set.apply o, args
+        @managers.forEach (m) -> m.reset()
         @
 
     trigger: (args...) ->
-        if @enabled then @map (o) -> o.trigger.apply o, args
+        if @enabled
+            @managers
+                .filter((m) -> m.enabled)
+                .forEach((m) -> m.trigger.apply m, args)
         @
 
     enable: ->
         @enabled = yes
         @
 
-    disable: (silent) ->
+    disable: ->
         @enabled = no
-        @
-
-    map: (cb) ->
-        cb(o) for o in @managers
         @
 
 

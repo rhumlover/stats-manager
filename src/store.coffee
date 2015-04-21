@@ -15,11 +15,18 @@ class Store extends Eventer
                 oldValue: oldValue
                 newValue: value
             }
+            @emit "change", {
+                key: key
+                value: value
+            }
 
     get: (key) ->
         if @data.hasOwnProperty key
             return @data[key]
         null
+
+    has: (key) ->
+        !!@get[key]
 
 
 module.exports = Store

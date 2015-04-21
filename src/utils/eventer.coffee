@@ -23,20 +23,19 @@ class Eventer
         }
 
     off: (evt, callback) ->
-        if [ns] = evt.match /^(\.|:)[0-9a-zA-Z_-]+$/
+        if hasNs = evt.match /^(\.|:)[0-9a-zA-Z_-]+$/
             _removeNS.call @, evt
         else
             _removeEvents.call @, evt, callback
         @
 
     _removeEvents = (evt, callback) ->
-        if list = @_events[evt]
-            i = len = list.length - 1
-            while i >= 0
-                item = list[i]
+        if listeners = @_events[evt]
+            i = listeners.length
+            while i--
+                item = listeners[i]
                 if not callback? or item.callback is callback
-                    list.splice i, 1
-                i--
+                    listeners.splice i, 1
         @
 
     _removeNS = (namespace) ->
@@ -52,19 +51,19 @@ class Eventer
 
     trigger: (evt, data...) ->
         onces = []
-        if list = @_events[evt]
-            for item in list
+        if listeners = @_events[evt]
+            for item in listeners
                 item.callback.apply item.context, data
                 if item.once
                     onces.push item
 
         if onces.length
             for item in onces
-                list.splice list.indexOf(item), 1
+                listeners.splice listeners.indexOf(item), 1
         @
 
     reset: ->
-        @_events.length = 0
+        @_events = {}
 
 # Aliases
 Eventer::emit = Eventer::trigger
