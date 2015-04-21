@@ -3,15 +3,14 @@
   "private": true,
   "version": "0.1.0",
   "description": "Client-Side Tag Management System (TMS)",
-  "main": "main.js",
   "directories": {
     "test": "test"
   },
-  "scripts": {
-    "bundle": "browserify -s StatsManager -c 'coffee -scb' main.js -o ./dist/stats-manager.js",
-    "bundle-min": "browserify -s StatsManager -c 'coffee -scb' main.js | uglifyjs -o ./dist/stats-manager.min.js",
-    "bundle-require": "browserify -c 'coffee -scb' -r ./main.js:StatsManager -o ./dist/stats-manager.require.js",
-    "bundle-require-min": "browserify -c 'coffee -scb' -r ./main.js:StatsManager | uglifyjs -o ./dist/stats-manager.require.min.js"
+    "scripts": {
+    "dev:var": "ENV_DEV=1 BUILD_VAR=1 webpack --watch -d",
+    "dev:umd": "ENV_DEV=1 BUILD_UMD=1 webpack --watch -d",
+    "build:var": "ENV_PROD=1 BUILD_VAR=1 webpack -p",
+    "build:umd": "ENV_PROD=1 BUILD_UMD=1 webpack -p"
   },
   "repository": {
     "type": "git",
@@ -26,9 +25,10 @@
     "url": "https://github.com/rhumlover/stats-manager/issues"
   },
   "homepage": "https://github.com/rhumlover/stats-manager",
-  "dependencies": {
-    "browserify": "*",
-    "coffee-script": "~1.2.0",
-    "uglify-js": "^2.4.15"
+  "dependencies": {},
+  "devDependencies": {
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.9.2",
+    "webpack": "^1.8.8"
   }
 }

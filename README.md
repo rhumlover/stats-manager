@@ -12,27 +12,36 @@ stats_plugin.listen(event)
 ```
 ## Installation
 
-### Local project
-
 ```
 $ git clone git@github.com:rhumlover/stats-manager.git
-$ cd stats-manager
-$ ls dist/
-stats-manager.js             stats-manager.require.js
-stats-manager.min.js         stats-manager.require.min.js
+$ npm install
 ```
-- `stats-manager.js` is web version of the library. It exposes a StatsManager object containing all main objects you can instantiate:
 
-![window.StatsManager](https://s3.amazonaws.com/f.cl.ly/items/3V2F430V1s0L3C431f2N/Image%202014-12-04%20at%202.19.46%20PM.png)
+### Dev environment
 
-- `stats-manager.require.js` is the CommonJS compliant version. It does not expose a main StatsManager object to `window`, but defines a "require" function, or use the existing one you might have already installed. You can then access to the main object by writing `var StatsManager = require('StatsManager');`
+- it will create a debug version in the `./dist/` directory and watch for the changes
+  *(eq. webpack -d --watch)*
 
-### Web browser
-- [stats-manager.js](http://s1.dmcdn.net/IFD5J.js)
-- [stats-manager.min.js](http://s2.dmcdn.net/IFD5M.js)
-- [stats-manager.require.js](http://s2.dmcdn.net/IFD5P.js)
-- [stats-manager.require.min.js](http://s1.dmcdn.net/IFD5U.js)
+```
+$ npm run-script dev:var
+// exposes the library as a top-level variable
 
+$ npm run-script dev:umd
+// exports the library as a module (compatible with AMD or CommonJS)
+```
+
+### Build environment
+
+- it will create a production-ready version in the `./dist/` directory: minified, with all `console` calls stripped
+  *(eq. webpack -p)*
+
+```
+$ npm run-script build:var
+// exposes the library as a top-level variable
+
+$ npm run-script build:umd
+// exports the library as a module (compatible with AMD or CommonJS)
+```
 
 ## Main Objects
 
@@ -67,7 +76,16 @@ statsManager.start()
 
 Global plugins constructor options:
 
-- sampling: a **function** returning true or false, defining if the plugin is activated or not
+- sampling: a **function** returning true or false, defining if the plugin is activated or not. 
+  Returning `false` means the session will be out of the sample, so deactivated.
+
+```
+plugin_GA = new GoogleAnalyticsPlugin({
+    account: 'UA-XXXXX-XX'
+    domain: 'your-domain.com'
+    sampling: -> location.hostname is 'github.com'
+})
+```
 
 #### GoogleAnalyticsPlugin
 ```
@@ -114,8 +132,8 @@ plugin_SC.listen(@PAGE_CHANGE)
 ```
 Constructor options: 
 
-- `s_account`: `window.s_account` used by SiteCatalyst
-- `pluginUrl`: your `s_code` url
+- `s_account`: your `s_account` id provided by SiteCatalyst
+- `pluginUrl`: your `s_code` hosted url
 
 Available methods:
 
@@ -123,7 +141,7 @@ Available methods:
 - `setData(data)`: merge data into the global `s` var
 - `track(data)`: merge data into the global `s` var and calls `s.t()`
 - `trackEvent(data)`: merge data into the global `s` var and calls `s.tl()`
-- `reset()`: reset all sProps and eVar of `s`
+- `reset(force = false)`: reset all sProps and events of `s`. Forcing will also reset all eVars
 
 #### ComScorePlugin
 ```
@@ -196,7 +214,7 @@ plugin_GA.listen(@PAGE_CHANGE)
   _ref = require('StatsManager');
   
   // Library
-  _ref = window.StatsManager
+  _ref = window.StatsManager;
   
   StatsManager = _ref.StatsManager;
   ComScorePlugin = _ref.ComScorePlugin;
