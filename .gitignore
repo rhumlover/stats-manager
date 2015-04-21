@@ -4,6 +4,7 @@
 .backup
 .sass-cache
 .tmp
+dist
 node_modules
 npm-debug.log
 rbuild
