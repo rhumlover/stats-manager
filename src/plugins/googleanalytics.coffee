@@ -2,17 +2,18 @@ Plugin = require '../plugin.coffee'
 
 _consoleColor = 'color:red;'
 
-class GoogleAnalyticsUniversalPlugin extends Plugin
+class GoogleAnalyticsPlugin extends Plugin
 
     initialize: (options) ->
         {account,domain,options} = @options
 
         if not account?
-            # console.warn 'GoogleAnalyticsUniversalPlugin: You must define an account'
+            console.warn 'GoogleAnalyticsPlugin: You must define an account to use the plugin.'
+            @enabled = no
             return @
 
         if 'ga' not of window
-            # console.log '%c[GA] Google Analytics (ga) not present, loading plugin at %s', _consoleColor, '//www.google-analytics.com/analytics.js'
+            console.log '%c[GA] Google Analytics (ga) not present, loading plugin at %s', _consoleColor, '//www.google-analytics.com/analytics.js'
             ((i, s, o, g, r, a, m) ->
                 i['GoogleAnalyticsObject'] = r;
                 i[r] = i[r] or ->
@@ -47,7 +48,7 @@ class GoogleAnalyticsUniversalPlugin extends Plugin
         if opt_value? then param.push opt_value
         if opt_noninteraction? then param.push { nonInteraction: 1 }
         @track param
-        # console.log '%c[GA] Tracking event %s', _consoleColor, JSON.stringify(param)
+        console.log '%c[GA] Tracking event %s', _consoleColor, JSON.stringify(param)
         @
 
     trackTiming: (category, variable, time, opt_label, opt_sampleRate) ->
@@ -57,16 +58,16 @@ class GoogleAnalyticsUniversalPlugin extends Plugin
             if opt_label? then param.push opt_label
             if opt_sampleRate? then param.push opt_sampleRate
             @track param
-            # console.log '%c[GA] Tracking timing %s', _consoleColor, JSON.stringify(param)
+            console.log '%c[GA] Tracking timing %s', _consoleColor, JSON.stringify(param)
         @
 
     trackPageview: (options = {}) ->
         @track ['send', 'pageview', options]
-        # console.log '%c[GA] Tracking page view', _consoleColor, options
+        console.log '%c[GA] Tracking page view', _consoleColor, options
         @
 
     # Aliases
     @::trackPageView = @::trackPageview
 
 
-module.exports = GoogleAnalyticsUniversalPlugin
+module.exports = GoogleAnalyticsPlugin

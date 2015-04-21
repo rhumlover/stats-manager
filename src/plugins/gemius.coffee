@@ -21,7 +21,7 @@ class GemiusPlugin extends Plugin
         @loadPlugin pluginUrl
 
     track: (i) ->
-        # console.log '%c[GEMIUS] Tracking data %s', _consoleColor, JSON.stringify(data)
+        console.log '%c[GEMIUS] Tracking data %s', _consoleColor, JSON.stringify(data)
         _window[i] = _window[i] or ->
             x = _window[i+'_pdata'] = _window[i+'_pdata'] or []
             x[x.length] = arguments

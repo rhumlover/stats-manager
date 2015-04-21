@@ -14,7 +14,7 @@ class ComScorePlugin extends Plugin
         @queue = if _cs then false else []
 
         if not _cs
-            # console.log '%c[CS] COMSCORE not present, loading plugin at %s', _consoleColor, pluginUrl
+            console.log '%c[CS] COMSCORE not present, loading plugin at %s', _consoleColor, pluginUrl
             @loadPlugin pluginUrl
         else
             @set 'loaded', yes
@@ -27,7 +27,7 @@ class ComScorePlugin extends Plugin
         @
 
     track: (data) ->
-        # console.log '%c[CS] Tracking data %s', _consoleColor, JSON.stringify(data)
+        console.log '%c[CS] Tracking data %s', _consoleColor, JSON.stringify(data)
         beacon = window.COMSCORE.beacon
         beacon data
 
