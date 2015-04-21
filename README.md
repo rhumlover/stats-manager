@@ -231,7 +231,7 @@ plugin_GA.listen(@PAGE_CHANGE)
     plugin_cs = new ComScorePlugin();
     plugin_cs.listen('ping')
         .then(function(data) {
-          console.log(data);
+            console.log(data);
         });
 
     sm.register(plugin_cs);
