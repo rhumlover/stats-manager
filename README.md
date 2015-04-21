@@ -5,7 +5,7 @@ StatsManager is a client-side Tag Management System (TMS) designed to work as a 
 
 ```
 stats_plugin.listen(event)
-    .filter((data)-> true/false)
+    .filter((data) -> true/false)
     .async((data, done) -> done(data))
     .then((data) -> data.var1 = 1; return data)
     .then((data) -> @track data)
@@ -171,7 +171,7 @@ Several chained methods are available:
 
 ```
 plugin.listen(event)
-    .filter((data)-> true/false)
+    .filter((data) -> true/false)
     .async((data, done) -> done(data))
     .then((data) -> @track...)
 ```
