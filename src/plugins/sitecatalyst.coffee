@@ -4,11 +4,13 @@ _consoleColor = 'color:blue;'
 
 class SiteCatalystPlugin extends Plugin
 
+    displayName: 'SiteCatalystPlugin'
+
     initialize: (options) ->
         @s = null
         @trackData = {}
 
-        {@s_account, pluginUrl} = @options
+        {s_account, pluginUrl} = @options
 
         if not pluginUrl?
             console.warn 'SiteCatalystPlugin: You must define a plugin_url to use the plugin.'
@@ -16,10 +18,11 @@ class SiteCatalystPlugin extends Plugin
             return @
 
         if not s_account?
-            console.warn 'SiteCatalystPlugin: You must define a s_account to use the plugin.'
+            console.warn 'SiteCatalystPlugin: You must define an s_account to use the plugin.'
             @enabled = no
             return @
 
+        @s_account = s_account
         if not @isLoaded()
             console.log '%c[SC] SiteCatalyst (s) not present, loading plugin at %s', _consoleColor, pluginUrl
             @loadPlugin pluginUrl
@@ -32,7 +35,7 @@ class SiteCatalystPlugin extends Plugin
 
     onLoad: ->
         if @isLoaded()
-            @s = window.SiteCatalyst.factory({ @s_account })
+            @s = window.SiteCatalyst.create({ @s_account })
             @media = @s.media
         else
             @enabled = no
@@ -45,7 +48,7 @@ class SiteCatalystPlugin extends Plugin
 
     setData: (data) ->
         console.log '%c[SC] Extending', _consoleColor, data
-        Object.keys(data).forEach((key) ->
+        Object.keys(data).forEach((key) =>
             @trackData[key] = data[key]
             @s[key] = data[key]
         )
@@ -70,14 +73,14 @@ class SiteCatalystPlugin extends Plugin
 
     track: (data) ->
         @setData data if data?
-        console.log '%c[SC] Tracking: sending s.t() with', _consoleColor, _.extend({}, @trackData)
+        console.log '%c[SC] Tracking: sending s.t() with', _consoleColor, @trackData
         @s.t()
         @reset()
         @
 
     trackEvent: (data, title) ->
         @setData data if data?
-        console.log '%c[SC] Tracking event: sending s.tl() with', _consoleColor, _.extend({}, @trackData)
+        console.log '%c[SC] Tracking event: sending s.tl() with', _consoleColor, @trackData
         @s.tl @s, 'o', title
         @reset()
         @

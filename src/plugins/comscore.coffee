@@ -4,6 +4,8 @@ _consoleColor = 'color: purple;'
 
 class ComScorePlugin extends Plugin
 
+    displayName: 'ComScorePlugin'
+
     _pluginUrl: (if @_is_https then 'https://sb' else 'http://b') + '.scorecardresearch.com/beacon.js'
 
     initialize: (options = {}) ->
@@ -11,10 +13,9 @@ class ComScorePlugin extends Plugin
         pluginUrl = @_pluginUrl unless pluginUrl?
 
         _cs = window.COMSCORE
-        @queue = if _cs then false else []
 
         if not _cs
-            console.log '%c[CS] COMSCORE not present, loading plugin at %s', _consoleColor, pluginUrl
+            console.log '%c[CS] window.COMSCORE not present, loading plugin at %s', _consoleColor, pluginUrl
             @loadPlugin pluginUrl
         else
             @set 'loaded', yes

@@ -4,6 +4,8 @@ _consoleColor = 'color:red;'
 
 class GoogleAnalyticsPlugin extends Plugin
 
+    displayName: 'GoogleAnalyticsPlugin'
+
     initialize: (options) ->
         {account,domain,options} = @options
 
