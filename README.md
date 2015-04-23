@@ -17,10 +17,23 @@ $ git clone git@github.com:rhumlover/stats-manager.git
 $ npm install
 ```
 
-### Dev environment
+## Tests
 
-- it will create a debug version in the `./dist/` directory and watch for the changes
-  *(eq. webpack -d --watch)*
+```
+$ npm test
+```
+
+### Development environment
+
+When working on the sources, you can setup a dev environment that will do the following:
+
+- build webpack and watch for changes (`ENV_DEV=1 BUILD_VAR=1 webpack --watch -d`)
+- run a local server on localhost:8080 (`coffee server.coffee`)
+- run mocha and run tests on each file change (`mocha --watch --reporter spec test/*.coffee`)
+
+### Building for dev
+
+It will create a debug version in the `./dist/` directory and watch for the changes *(eq. webpack -d --watch)*
 
 ```
 $ npm run-script dev:var
@@ -30,10 +43,9 @@ $ npm run-script dev:umd
 // exports the library as a module (compatible with AMD or CommonJS)
 ```
 
-### Build environment
+### Building for production
 
-- it will create a production-ready version in the `./dist/` directory: minified, with all `console` calls stripped
-  *(eq. webpack -p)*
+It will create a production-ready version in the `./dist/` directory: minified, with all `console` calls stripped *(eq. webpack -p)*
 
 ```
 $ npm run-script build:var

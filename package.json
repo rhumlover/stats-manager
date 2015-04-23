@@ -6,7 +6,7 @@
     "test": "test"
   },
   "scripts": {
-    "dev": "ENV_DEV=1 BUILD_VAR=1 webpack --watch -d & coffee server.coffee",
+    "dev": "ENV_DEV=1 BUILD_VAR=1 webpack --watch -d & coffee server.coffee & mocha --watch --reporter spec test/*.coffee",
     "dev:var": "ENV_DEV=1 BUILD_VAR=1 webpack --watch -d",
     "dev:umd": "ENV_DEV=1 BUILD_UMD=1 webpack --watch -d",
     "build:var": "ENV_PROD=1 BUILD_VAR=1 webpack -p",
