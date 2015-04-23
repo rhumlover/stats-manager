@@ -17,9 +17,8 @@ class Plugin
         if @options.sampling?
             return if not @setSampling @options.sampling
 
-        onModelChange = (model, options) =>
+        onModelChange = (model, data, options) =>
             if @isReady()
-                console.log '%c$ %s is ready !', 'font-weight:bold;', @
                 _unqueue.call @
                 @_data.off 'change', onModelChange
 
@@ -31,7 +30,6 @@ class Plugin
         @initialize?()
 
     start: ->
-        console.log '$ Starting %s', @
         @set 'started', yes
         @
 
@@ -39,7 +37,6 @@ class Plugin
         if @_triggerQueue.length
             ((queue) =>
                 for queueItem in queue
-                    console.log '$ Unqueuing %s on %s', queueItem[0], @
                     @trigger.apply @, queueItem
                 return
             )(@_triggerQueue)
@@ -49,10 +46,7 @@ class Plugin
         @get('started') is yes and @get('loaded') is yes
 
     setSampling: (isInSample) ->
-        if isInSample?() isnt true
-            console.log '%c⚠ Plugin %s is not sampled and has been disabled', 'font-weight: bold', @
-            @enabled = no
-        @enabled
+        @enabled = if isInSample?() is no then no else yes
 
 
     # ---------------------------------------
@@ -64,7 +58,7 @@ class Plugin
     set: (key, value, options) ->
         @_data.set key, value, options
 
-    remove: (key) ->
+    unset: (key) ->
         @_data.unset key
 
     has: (key) ->
@@ -80,7 +74,6 @@ class Plugin
             @_triggerQueue.push arguments
             return @
 
-        console.log '$ Trigerring %s on %s', e, @
         @_eventBus.trigger.apply @_eventBus, arguments
         @
 
@@ -115,7 +108,6 @@ class Plugin
         cs.onload = cs.onreadystatechange = ->
             if not loaded and (not @readyState or @readyState is 'loaded' or @readyState is 'complete')
                 loaded = true
-                console.log '> Plugin for %s loaded', self
 
                 self.onPluginLoaded?()
 
@@ -126,7 +118,7 @@ class Plugin
             return
 
         cs.onerror = ->
-            # console.warn '%cError loading script at %s', 'font-weight: bold;', pluginUrl
+            console.warn '%cError loading script at %s', 'font-weight: bold;', pluginUrl
             return
 
         s = document.getElementsByTagName('script')[0]
