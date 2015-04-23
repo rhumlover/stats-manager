@@ -27,7 +27,7 @@ class Plugin
             @onLoad?() if value is true
             return
 
-        @initialize?()
+        @initialize?(@options)
 
     start: ->
         @set 'started', yes
