@@ -6,19 +6,17 @@ class Store extends Eventer
         @data = data ? {}
         super data
 
-    set: (key, value, silent = false) ->
+    set: (key, value, options = {}) ->
         oldValue = @data[key] ? null
         @data[key] = value
 
-        if not silent
-            @emit "change:#{key}", {
+        unless options.silent
+            @emit "change:#{key}", @, value, options
+            @emit "change", @, {
+                key: key
                 oldValue: oldValue
                 newValue: value
-            }
-            @emit "change", {
-                key: key
-                value: value
-            }
+            }, options
 
     get: (key) ->
         if @data.hasOwnProperty key
@@ -28,5 +26,7 @@ class Store extends Eventer
     has: (key) ->
         !!@get[key]
 
+    unset: (key) ->
+        delete @data[key]
 
 module.exports = Store
