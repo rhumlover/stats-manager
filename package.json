@@ -2,6 +2,23 @@
   "name": "stats-manager",
   "version": "1.0.0",
   "description": "Client-Side Tag Management System (TMS)",
+  "author": "Thomas LE JEUNE",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rhumlover/stats-manager"
+  },
+  "bugs": {
+    "url": "https://github.com/rhumlover/stats-manager/issues"
+  },
+  "homepage": "https://github.com/rhumlover/stats-manager",
+  "keywords": [
+    "statistics",
+    "googleanalytics",
+    "sitecatalyst",
+    "comscore",
+    "gemius"
+  ],
   "directories": {
     "test": "test"
   },
@@ -13,19 +30,6 @@
     "build:umd": "ENV_PROD=1 BUILD_UMD=1 webpack -p",
     "test": "mocha --reporter spec test/*.coffee"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/rhumlover/stats-manager"
-  },
-  "keywords": [
-    "statistics"
-  ],
-  "author": "Thomas LE JEUNE",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/rhumlover/stats-manager/issues"
-  },
-  "homepage": "https://github.com/rhumlover/stats-manager",
   "dependencies": {},
   "devDependencies": {
     "chai": "*",
