@@ -4,7 +4,12 @@ class Eventer
         @_events = {}
 
     on: (evt, callback, context, once = false) ->
-        if not callback?
+        unless evt?
+            console.warn 'Trying to subscribe to an undefined event'
+            console.trace()
+            return
+
+        unless callback?
             console.warn 'You cannot register to an event without specifying a callback'
             return
 
