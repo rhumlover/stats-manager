@@ -10,14 +10,18 @@ class GemiusPlugin extends Plugin
     _pluginUrl: '//gatr.hit.gemius.pl/xgemius.js'
 
     initialize: (options = {}) ->
-        {pluginUrl, identifier} = options
+        {pluginUrl, identifier, hits} = options
         pluginUrl = @_pluginUrl unless pluginUrl?
 
+        unless identifier?
+            console.warn 'GemiusPlugin: You must define an identifier to use the plugin.'
+            @enabled = no
+            return @
+
         _window.pp_gemius_identifier = identifier
-        @track 'gemius_hit'
-        @track 'gemius_event'
-        @track 'pp_gemius_hit'
-        @track 'pp_gemius_event'
+
+        if hits? and Array.isArray hits
+            hits.forEach @track.bind @
 
         @loadPlugin pluginUrl
 

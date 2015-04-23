@@ -8,7 +8,15 @@
 
         before(function() {
             sm = new StatsManager();
-            plugin_gm = new GemiusPlugin();
+            plugin_gm = new GemiusPlugin({
+                identifier: 'your.identifier',
+                hits: [
+                    'gemius_hit',
+                    'gemius_event',
+                    'pp_gemius_hit',
+                    'pp_gemius_event'
+                ]
+            });
             sm.register(plugin_gm);
             sm.start()
         });
