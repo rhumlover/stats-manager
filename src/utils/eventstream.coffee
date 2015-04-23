@@ -9,12 +9,18 @@ class EventStreamOperation
             @fn.apply @context, args
             return
 
-        res = @fn.apply @context, args
-        nextArgs = if typeof res is 'boolean' then args else res
-        if res and @next? then @next.run.apply @next, nextArgs
+        if @name is 'filter'
+            res = @fn.apply @context, args
+            if res is true then @next?.run.apply @next, args
+            return
+
+        if @name is 'then'
+            res = @fn.apply @context, args
+            @next?.run.apply @next, args
+            return
 
     done: (args...) ->
-        @next? and @next.run.apply @next, args
+        @next?.run.apply @next, args
 
 
 class EventStream
@@ -51,12 +57,6 @@ class EventStream
             catch e
                 return false
             true
-        @
-
-    test: (condition) ->
-        self = @
-        @register 'test', (args...) ->
-            return condition.apply self.context, args
         @
 
     then: (callback) ->
