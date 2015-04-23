@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" media="all" href="/vendor/mocha/mocha.css">
+</head>
+<body>
+    <div id="mocha"></div>
+    <div id="messages"></div>
+    <div id="fixtures"></div>
+
+    <script src="/vendor/mocha/mocha.js"></script>
+    <script src="/vendor/chai/chai.js"></script>
+    <script src="/dist/stats-manager.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script src="test-browser-googleanalytics.js"></script>
+    <script src="test-browser-sitecatalyst.js"></script>
+    <script src="test-browser-comscore.js"></script>
+    <script src="test-browser-gemius.js"></script>
+    <script>mocha.run();</script>
+</body>
+</html>
