@@ -40,5 +40,9 @@ class StatsManager
         @enabled = no
         @
 
+    set: (key, value, options) ->
+        @managers.forEach (m) -> m.set key, value, options
+        @
+
 
 module.exports = StatsManager
