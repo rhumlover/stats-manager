@@ -35,6 +35,7 @@ class Plugin
 
     _unqueue = ->
         if @_triggerQueue.length
+            console.log '%c[%s] Plugin ready, unqueuing events %O', 'font-weight: bold;', @displayName, @_triggerQueue
             ((queue) =>
                 for queueItem in queue
                     @trigger.apply @, queueItem
@@ -71,6 +72,7 @@ class Plugin
     trigger: (e) ->
         if not e? or not @enabled then return @
         if not @isReady()
+            console.log '%c[%s] Plugin not ready, queuing event `%s`', 'font-weight: bold;', @displayName, e
             @_triggerQueue.push arguments
             return @
 
@@ -114,6 +116,7 @@ class Plugin
                 # Avoid memory leak in IE
                 cs.onload = cs.onreadystatechange = null
                 if cs.parentNode then cs.parentNode.removeChild cs
+                console.log '%c[%s] script loaded successfully (%s)', 'font-weight: bold;', self.displayName, pluginUrl
                 self.set 'loaded', yes
             return
 
@@ -124,6 +127,5 @@ class Plugin
         s = document.getElementsByTagName('script')[0]
         s.parentNode.insertBefore cs, s
         @
-
 
 module.exports = Plugin
