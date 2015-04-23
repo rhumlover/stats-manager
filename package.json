@@ -6,11 +6,12 @@
   "directories": {
     "test": "test"
   },
-    "scripts": {
+  "scripts": {
     "dev:var": "ENV_DEV=1 BUILD_VAR=1 webpack --watch -d",
     "dev:umd": "ENV_DEV=1 BUILD_UMD=1 webpack --watch -d",
     "build:var": "ENV_PROD=1 BUILD_VAR=1 webpack -p",
-    "build:umd": "ENV_PROD=1 BUILD_UMD=1 webpack -p"
+    "build:umd": "ENV_PROD=1 BUILD_UMD=1 webpack -p",
+    "test": "mocha --reporter spec test/*.coffee"
   },
   "repository": {
     "type": "git",
@@ -27,8 +28,10 @@
   "homepage": "https://github.com/rhumlover/stats-manager",
   "dependencies": {},
   "devDependencies": {
+    "chai": "*",
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.9.2",
+    "mocha": "*",
     "webpack": "^1.8.8"
   }
 }
