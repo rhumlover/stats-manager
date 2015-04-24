@@ -1,6 +1,6 @@
 express = require 'express'
 app = express()
-port = 8080
+port = 8181
 
 app.use '/dist', express.static('dist')
 app.use '/vendor', express.static('node_modules')
