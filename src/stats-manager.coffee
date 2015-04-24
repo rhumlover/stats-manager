@@ -5,12 +5,15 @@ class StatsManager
         @managers = []
         @enabled = yes
 
-    setEvents: (@eventList) ->
-        return unless eventList?
+    setEvents: (eventList) ->
+        return if not eventList? and not Array.isArray eventList
+        eventList.forEach @setEvent.bind @
+        @
 
-        for e in eventList
-            @[e] = e
-            StatsManager[e] = e
+    setEvent: (evt) ->
+        return if typeof evt isnt 'string'
+        @[evt] = evt
+        StatsManager[evt] = evt
         @
 
     register: (statPluginManager) ->
