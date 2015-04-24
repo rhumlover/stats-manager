@@ -7,8 +7,12 @@ StatsManager is a client-side Tag Management System (TMS) designed to work as a 
 stats_plugin.listen(event)
     .filter((data) -> true/false)
     .async((data, done) -> done(data))
-    .then((data) -> data.var1 = 1; return data)
+    .then((data) -> data.var1 = 1)
     .then((data) -> @track data)
+
+... Then elsewhere, in your controllers:
+
+statsmanager.trigger('ping', { data })
 ```
 ## Installation
 
@@ -61,6 +65,7 @@ $ npm run-script build:umd
 - StatsManager
     .plugins
         .ComScorePlugin
+        .GemiusPlugin
         .GoogleAnalyticsPlugin
         .SiteCatalystPlugin
 ```
