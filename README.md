@@ -3,27 +3,27 @@ StatsManager
 
 StatsManager is a client-side Tag Management System (TMS) designed to work as a chainable Stream Flow:
 
-```
+```coffee
 stats_plugin.listen(event)
     .filter((data) -> true/false)
     .async((data, done) -> done(data))
     .then((data) -> data.var1 = 1)
     .then((data) -> @track data)
 
-... Then elsewhere, in your controllers:
+# Then elsewhere, in your controllers:
 
 statsmanager.trigger('ping', { data })
 ```
 ## Installation
 
-```
+```Shell
 $ git clone git@github.com:rhumlover/stats-manager.git
 $ npm install
 ```
 
 ## Tests
 
-```
+```Shell
 $ npm test
 ```
 
@@ -39,24 +39,24 @@ When working on the sources, you can setup a dev environment that will do the fo
 
 It will create a debug version in the `./dist/` directory and watch for the changes *(eq. webpack -d --watch)*
 
-```
+```Shell
 $ npm run-script dev:var
-// exposes the library as a top-level variable
+# exposes the library as a top-level variable
 
 $ npm run-script dev:umd
-// exports the library as a module (compatible with AMD or CommonJS)
+# exports the library as a module (compatible with AMD or CommonJS)
 ```
 
 ### Building for production
 
 It will create a production-ready version in the `./dist/` directory: minified, with all `console` calls stripped *(eq. webpack -p)*
 
-```
+```Shell
 $ npm run-script build:var
-// exposes the library as a top-level variable
+# exposes the library as a top-level variable
 
 $ npm run-script build:umd
-// exports the library as a module (compatible with AMD or CommonJS)
+# exports the library as a module (compatible with AMD or CommonJS)
 ```
 
 ## Main Objects
@@ -72,12 +72,12 @@ $ npm run-script build:umd
 
 ### StatsManager
 
-```
+```CoffeeScript
 StatsManager = require 'StatsManager'
 SiteCatalystPlugin = StatsManager.plugins.SiteCatalystPlugin
 GoogleAnalyticsPlugin = StatsManager.plugins.GoogleAnalyticsPlugin
 
-// Define available events
+# Define available events
 eventList = [
     "START"
     "PAUSE"
@@ -85,18 +85,18 @@ eventList = [
     "END"
 ]
 
-// Instanciate the main StatsManager
+# Instanciate the main StatsManager
 statsManager = new StatsManager(eventList)
 
-// create plugin instances
+# create plugin instances
 plugin_SC = new SiteCatalystPlugin()
 plugin_GA = new GoogleAnalyticsPlugin()
 
-// Register plugins
+# Register plugins
 statsManager.register plugin_SC
 statsManager.register plugin_GA
 
-// Start listening
+# Start listening
 statsManager.start()
 
 ```
@@ -108,7 +108,7 @@ Global plugins constructor options:
 - sampling: a **function** returning true or false, defining if the plugin is activated or not. 
   Returning `false` means the session will be out of the sample, so deactivated.
 
-```
+```CoffeeScript
 plugin_GA = new GoogleAnalyticsPlugin({
     account: 'UA-XXXXX-XX'
     domain: 'your-domain.com'
@@ -117,13 +117,13 @@ plugin_GA = new GoogleAnalyticsPlugin({
 ```
 
 #### GoogleAnalyticsPlugin
-```
+```CoffeeScript
 plugin_GA = new GoogleAnalyticsPlugin({
     account: 'UA-XXXXX-XX'
     domain: 'your-domain.com'
 })
 
-plugin_GA.listen(@PAGE_CHANGE)
+plugin_GA.listen(statsManager.PAGE_CHANGE)
     .then((data) ->
         @trackPageview {
             'page': data.location
@@ -144,14 +144,14 @@ Available methods (basically a mapping of Google's ones):
 - `trackTiming(category, variable, time, opt_label, opt_sampleRate)`
 
 #### SiteCatalystPlugin
-```
+```CoffeeScript
 plugin_SC = new SiteCatalystPlugin({
     s_account: window.s_account
     pluginUrl: 'http://your-domain/s_code.js'
     sampling: -> Math.random() < 0.25
 })
 
-plugin_SC.listen(@PAGE_CHANGE)
+plugin_SC.listen(statsManager.PAGE_CHANGE)
     .then((data) ->
         @track {
             eVar1: data.eVar1
@@ -173,10 +173,10 @@ Available methods:
 - `reset(force = false)`: reset all sProps and events of `s`. Forcing will also reset all eVars
 
 #### ComScorePlugin
-```
+```CoffeeScript
 plugin_CS = new ComScorePlugin()
 
-plugin_CS.listen(@PAGE_CHANGE)
+plugin_CS.listen(statsManager.PAGE_CHANGE)
     .filter((data) -> data.page isnt 'Home')
     .then((data) ->
         @track {
@@ -198,7 +198,7 @@ Available methods:
 
 Several chained methods are available:
 
-```
+```CoffeeScript
 plugin.listen(event)
     .filter((data) -> true/false)
     .async((data, done) -> done(data))
@@ -216,7 +216,7 @@ All methods **except listen** can be chained multiple times. You could call a hu
 
 Mixins are helpers functions you can register to a plugin, and use (include) anytime you want within the stream flow callbacks. Ex:
 
-```
+```CoffeeScript
 plugin_GA = new GoogleAnalyticsPlugin({
     account: 'UA-XXXXX-XX'
     domain: 'mydomain.com'
@@ -225,7 +225,7 @@ plugin_GA = new GoogleAnalyticsPlugin({
 plugin_GA.mixin 'getLocation', () ->
     location.pathname or '/'
 
-plugin_GA.listen(@PAGE_CHANGE)
+plugin_GA.listen(statsManager.PAGE_CHANGE)
     .then((data) ->
         @trackPageview {
             'page': @include 'getLocation'
@@ -235,7 +235,7 @@ plugin_GA.listen(@PAGE_CHANGE)
 ```
 
 ## Integration example
-```
+```JavaScript
 (function() {
     var ComScorePlugin, StatsManager, plugin_cs, sm;
 
