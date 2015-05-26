@@ -1,23 +1,19 @@
 class StatsManager
 
     constructor: (eventList) ->
-        @setEvents eventList
+        @events = {}
         @managers = []
         @enabled = yes
 
-    setEvents: (eventList) ->
-        return if not eventList? and not Array.isArray eventList
-        eventList.forEach @setEvent.bind @
-        @
+        if Array.isArray eventList
+            reduceToObject = (acc, evt) ->
+                acc[evt] = evt
+                acc
 
-    setEvent: (evt) ->
-        return if typeof evt isnt 'string'
-        @[evt] = evt
-        StatsManager[evt] = evt
-        @
+            @events = eventList.reduce reduceToObject, @events
 
-    register: (statPluginManager) ->
-        @managers.push statPluginManager
+    register: (statPlugin) ->
+        @managers.push statPlugin
         @
 
     start: ->
@@ -29,10 +25,10 @@ class StatsManager
         @
 
     trigger: (args...) ->
-        if @enabled
-            @managers
-                .filter((m) -> m.enabled)
-                .forEach((m) -> m.trigger.apply m, args)
+        return @ unless @enabled
+        @managers
+            .filter((m) -> m.enabled)
+            .forEach((m) -> m.trigger.apply m, args)
         @
 
     enable: ->

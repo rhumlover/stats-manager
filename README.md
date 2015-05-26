@@ -72,6 +72,9 @@ $ npm run-script build:umd
 
 ### StatsManager
 
+It's the only object you'll interact with. Your application shouldn't be aware 
+of any plugin, but instead it wants to deal with only one TMS endpoint.
+
 ```CoffeeScript
 StatsManager = require 'StatsManager'
 SiteCatalystPlugin = StatsManager.plugins.SiteCatalystPlugin
@@ -88,6 +91,9 @@ eventList = [
 # Instanciate the main StatsManager
 statsManager = new StatsManager(eventList)
 
+# To help maintenance of events and prevent calling unregistered events,
+# all events will be accessible via `statsManager.events` (see below)
+
 # create plugin instances
 plugin_SC = new SiteCatalystPlugin()
 plugin_GA = new GoogleAnalyticsPlugin()
@@ -99,6 +105,23 @@ statsManager.register plugin_GA
 # Start listening
 statsManager.start()
 
+#finally
+module.exports = statsManager
+```
+
+Then in your application:
+
+```CoffeeScript
+statsManager = require 'services/stats'
+statsEvents = statsManager.events
+
+player.on 'play', ->
+    statsManager.trigger statsEvents.START
+
+player.on 'pause', ->
+    statsManager.trigger statsEvents.PAUSE
+
+# ...
 ```
 
 ### Plugins
