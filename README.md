@@ -105,7 +105,7 @@ statsManager.register plugin_GA
 # Start listening
 statsManager.start()
 
-#finally
+# Finally
 module.exports = statsManager
 ```
 
@@ -122,6 +122,44 @@ player.on 'pause', ->
     statsManager.trigger statsEvents.PAUSE
 
 # ...
+```
+
+Note: to process events, a plugin needs to be **loaded** and **started**. 
+**loaded** usually occurs automatically when you lazy-load your 3rd-party plugin, 
+but if you loads it directly (via `require...` for instance), you'll need to 
+`plugin.set 'loaded'` manually.  
+**started** will be set automatically when you call `statsManager.start()`, but 
+if needed you also can stop/start any plugin directly (`plugin.stop()`).
+
+#### Plugin lifecycle
+
+```
+ App                                    Stats
+-----                                  _______
+
+require 'Stats'                plugin = new Plugin()
+                                | plugin is not started and not loaded
+                                    > plugin.load()
+                                | start plugin
+                                    > plugin.set 'started', yes
+                                
+stats.trigger 'ping'           plugin.listen 'ping'
+                                | plugin is started but not loaded
+                                    > queue event 'ping'
+
+stats.trigger 'page-view'      plugin.listen 'ping'
+                                | plugin is started but not loaded
+                                    > queue event 'page-view'
+                                    
+                               << plugin loaded
+                                   > plugin.set 'loaded', true
+                                   > plugin.unqueue()
+                                       > process event 'ping'
+                                       > process event 'page-view'
+                               
+stats.trigger 'play'           plugin.listen 'play'
+                                | plugin is started and loaded
+                                    > process event 'play'
 ```
 
 ### Plugins
