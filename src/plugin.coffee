@@ -9,7 +9,10 @@ class Plugin
         @_triggerQueue = []
         @_mixins = {}
         @_eventBus = new Eventer()
-        @_data = new Store()
+        @_data = new Store({
+            started: no
+            loaded: no
+        })
 
         @session = new Session()
         @enabled = yes
@@ -31,6 +34,10 @@ class Plugin
 
     start: ->
         @set 'started', yes
+        @
+
+    stop: ->
+        @set 'started', no
         @
 
     _unqueue = ->
@@ -70,8 +77,8 @@ class Plugin
     # EVENTS
     # ---------------------------------------
     trigger: (e) ->
-        if not e? or not @enabled then return @
-        if not @isReady()
+        if (not e?) or (not @enabled) or (@get('started') is no) then return @
+        if @get('loaded') is no
             console.log '%c[%s] Plugin not ready, queuing event `%s`', 'font-weight: bold;', @displayName, e
             @_triggerQueue.push arguments
             return @
@@ -80,9 +87,9 @@ class Plugin
         @
 
     listen: (eventName) ->
-        str = new EventStream @
-        @_eventBus.on eventName, str.run.bind(str)
-        str
+        stream = new EventStream @
+        @_eventBus.on eventName, stream.run.bind(stream)
+        stream
 
 
     # ---------------------------------------
