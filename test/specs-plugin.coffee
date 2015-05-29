@@ -40,6 +40,7 @@ describe 'StatsManager > Plugin > Initialization', ->
         sm = new StatsManager()
         plugin = new Plugin()
         sm.register plugin
+        sm.start()
 
         queued = 0
 
@@ -48,12 +49,11 @@ describe 'StatsManager > Plugin > Initialization', ->
             plugin.listen('queue2').then(-> queued++)
             return
 
-        it 'should queue events until plugin is loaded and started', ->
+        it 'should queue events until plugin is loaded', ->
             sm.trigger 'queue1'
             sm.trigger 'queue2'
             expect(queued).to.equal 0
 
-        it 'should unqueue events when plugin is ready', ->
+        it 'should unqueue events when plugin is loaded', ->
             plugin.set 'loaded', yes
-            sm.start()
             expect(queued).to.equal 2
