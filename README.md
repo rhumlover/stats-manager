@@ -135,26 +135,31 @@ if needed you also can stop/start any plugin directly (`plugin.stop()`).
 
 ```
  App                                    Stats
------                                  _______
+_____                                  _______
 
 require 'Stats'                plugin = new Plugin()
+                               
+                               >> plugin.load()
+
+stats.trigger 'start'          plugin.listen 'start'
                                 | plugin is not started and not loaded
-                                    > plugin.load()
-                                | start plugin
+                                    > exit
+
+                               start plugin
                                     > plugin.set 'started', yes
                                 
-stats.trigger 'ping'           plugin.listen 'ping'
+stats.trigger 'request'        plugin.listen 'request'
                                 | plugin is started but not loaded
-                                    > queue event 'ping'
+                                    > queue event 'request'
 
-stats.trigger 'page-view'      plugin.listen 'ping'
+stats.trigger 'page-view'      plugin.listen 'page-view'
                                 | plugin is started but not loaded
                                     > queue event 'page-view'
                                     
                                << plugin loaded
                                    > plugin.set 'loaded', true
                                    > plugin.unqueue()
-                                       > process event 'ping'
+                                       > process event 'request'
                                        > process event 'page-view'
                                
 stats.trigger 'play'           plugin.listen 'play'
