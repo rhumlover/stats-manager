@@ -97,7 +97,10 @@ class Plugin
     # ---------------------------------------
     mixin: (name, fn) ->
         @_mixins[name] = fn
-        @[name] = fn.bind(@)
+        if name not of @
+            @[name] = fn.bind(@)
+        else
+            console.warn '%c[%s] Plugin > mixin: a property/ method named `%s` already exists, cannot override', 'font-weight: bold;', name
         @
 
     include: (name, args...) ->

@@ -20,3 +20,10 @@ describe 'StatsManager > Plugin > Mixins', ->
         plugin.listen('mixin')
             .then(-> expect(@include 'return.true').to.equal yes)
         sm.trigger 'mixin'
+
+    it 'should\'nt override plugin property/ method with an existing name', ->
+        originalMethod = plugin.mixin
+        newMethod = -> yes
+
+        plugin.mixin('mixin', newMethod)
+        expect(plugin.mixin).to.equal originalMethod

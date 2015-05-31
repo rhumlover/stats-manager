@@ -294,11 +294,15 @@ plugin_GA.mixin 'getLocation', () ->
 plugin_GA.listen(statsManager.PAGE_CHANGE)
     .then((data) ->
         @trackPageview {
-            'page': @include 'getLocation'
+            'page': @include 'getLocation' # or @getLocation()
             'title': data.page
         }
     )
 ```
+
+Note that you can't override an existing method of property of Plugin. For instance, 
+calling `plugin.mixin 'mixin', () -> null` will get a warning, and your custom `mixin` 
+method will only be callable via `@include 'mixin'`.
 
 ## Integration example
 ```JavaScript
